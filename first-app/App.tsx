@@ -1,20 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
 import {useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, StackActions} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StackScreen } from 'react-native-screens';
 
 
 export default function App() {
-
   const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
-      <StackActions.Navigator>
-        <Stack.Screen name="Home" component={MainScreen}/>
-      </StackActions.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component = {MainScreen}/>
+      </Stack.Navigator>
     </NavigationContainer>
   ); 
 }
@@ -26,22 +24,20 @@ function MainScreen() {
   console.log("App works!");
 
   return (
-  
-    <View>
+    <View> 
 
-      <View style={styles.mainPicture}>
-        <Image style={styles.imageImg} source={require('./assets/fifa.jpg')}/>
+      <View style= {styles.mainPicture}>
+        <Image style={styles.imageImg} source = {require('./assets/fifa.jpg')}/> 
       </View>
 
-      <Text style={styles.welcomeTxt}>Welcome to my app!</Text>
+      <Text style = {styles.welcomeTxt}>Welcome to my app!</Text>
 
       <Text style={styles.headingTxt}>Enter your name:</Text>
       <TextInput style={styles.inputBoxtTxt} placeholder="Heric"
-      onChangeText={newText => setName(newText)}/>
+        onChangeText={newText => setName(newText)}/>
       <Text style={styles.headingTxt}>Enter your surname:</Text>
       <TextInput style={styles.inputBoxtTxt} placeholder="Baptista"
-      onChangeText={newText => setSurname(newText)}/>
-
+        onChangeText={newText => setSurname(newText)}/>
 
       <Button title="Add user"
         onPress={() => {
@@ -50,9 +46,8 @@ function MainScreen() {
 
       <StatusBar style="auto" />
     </View>
-    </NavigationContainer>
+    
   );
-
 }
 
 const styles = StyleSheet.create({
