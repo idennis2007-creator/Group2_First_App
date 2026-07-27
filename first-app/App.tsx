@@ -1,9 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
+import {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackScreen } from 'react-native-screens';
 
 
 export default function App() {
+
+  const Stack = createNativeStackNavigator();
+
   return (
+    <NavigationContainer>
+      <StackActions.Navigator>
+        <Stack.Screen name="Home" component={MainScreen}/>
+      </StackActions.Navigator>
+    </NavigationContainer>
+  ); 
+}
+
+function MainScreen() {
+  const [Name, setName] = useState('');
+  const [Surname, setSurname] = useState(''); 
+
+  console.log("App works!");
+
+  return (
+  
     <View>
 
       <View style={styles.mainPicture}>
@@ -13,17 +36,23 @@ export default function App() {
       <Text style={styles.welcomeTxt}>Welcome to my app!</Text>
 
       <Text style={styles.headingTxt}>Enter your name:</Text>
-      <TextInput style={styles.inputBoxtTxt} placeholder="Heric"/>
-
+      <TextInput style={styles.inputBoxtTxt} placeholder="Heric"
+      onChangeText={newText => setName(newText)}/>
       <Text style={styles.headingTxt}>Enter your surname:</Text>
-      <TextInput style={styles.inputBoxtTxt} placeholder="Baptista"/>
+      <TextInput style={styles.inputBoxtTxt} placeholder="Baptista"
+      onChangeText={newText => setSurname(newText)}/>
 
 
-      <Button title="Add user"/>
-    
+      <Button title="Add user"
+        onPress={() => {
+          console.log("Name: " + Name + ", Surname: " + Surname);
+        }}/>
+
       <StatusBar style="auto" />
     </View>
+    </NavigationContainer>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -43,10 +72,6 @@ const styles = StyleSheet.create({
 
   inputBoxtTxt: {
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    marginVertical: 10,
   },
 
   mainPicture: {
@@ -59,4 +84,8 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: "contain",
   },
+  inputFlex: {
+    marginTop: 20,
+    justifyContent: 'space-evenly',
+  }
 });
