@@ -34,10 +34,19 @@ function MainScreen() {
 
       <Text style={styles.headingTxt}>Enter your name:</Text>
       <TextInput style={styles.inputBoxtTxt} placeholder="Heric"
-        onChangeText={newText => setName(newText)}/>
+        autoCapitalize="words"
+        autoComplete="name-given"
+        textContentType="givenName"
+        keyboardType="default"
+        onChangeText={newText => setName(newText.replace(/[^a-zA-Z]/g, ''))}/>
+
       <Text style={styles.headingTxt}>Enter your surname:</Text>
       <TextInput style={styles.inputBoxtTxt} placeholder="Baptista"
-        onChangeText={newText => setSurname(newText)}/>
+        autoCapitalize="words"
+        autoComplete="name-family"
+        textContentType="familyName"
+        keyboardType="default"
+        onChangeText={newText => setSurname(newText.replace(/[^a-zA-Z]/g, ''))}/>
 
       <Button title="Add user"
         onPress={() => {
