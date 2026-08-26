@@ -4,7 +4,8 @@ import {useState, useRef, useEffect, ReactNode} from 'react';
 import {NavigationContainer,} from '@react-navigation/native';
 import {createNativeStackNavigator, NativeStackScreenProps} from '@react-navigation/native-stack'; 
 import {RadioButton} from 'react-native-paper';
-
+import { Easing } from 'react-native';
+import { ImageSourcePropType } from 'react-native;
 
 type RootStackParamList = {
   Home: undefined;
@@ -100,6 +101,8 @@ function ViewDetails({ navigation, route}: ViewDetailsProps){
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend; 
   const [selectedValue, setSelectedValue] = useState('0');
+  const [ImageBlock, setImage] = useState<ImageSourcePropType | undefined>(undefined); 
+
 
   return (
     <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -133,7 +136,33 @@ function ViewDetails({ navigation, route}: ViewDetailsProps){
             />
             <Text style={styles.radioLabel}>HTML and CSS</Text>
           </View>
-          
+          <View>
+            <View style = { {flex: 1 } }>
+              <Text style = { {fontWeight: "bold",flex: 0,paddingTop: 40,
+                justifyContent: 'center',textAlign: 'center', alignItems: 'center'} }>
+                  Generate your Language
+              </Text>
+
+              <Button title = "Generate"
+              onPress = {() => {
+
+                switch (selectedValue)
+                {
+                  case "1":
+                    setImage (require('./images/react-native.png'))
+                  case "2":
+                    setImage (require('./images/kotlin.png'))
+                  case "3":
+                    setImage (require('./images/html.png')) 
+                    default: 
+                    setImage(undefined); 
+
+
+                }
+              }}
+              />
+              </View style = {styles.container}
+              <Image source={imageBlock} style={styles,ViewImage}></Image>
           </View>
     
   );
@@ -191,6 +220,33 @@ const FadeInView =({style, children}: FadeInViewProps) => {
       </Stack.Navigator>
     )
   }
+
+  function SlideIn({children}) {
+    const t = useRef(new Animated.Value(100)).current;
+    const o = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+      Animated.parallel([
+        Animated.timing(t, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: false
+        }),
+        Animated.timing(o, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: false
+        }),
+      ]). start();
+    }, []);
+    
+    return (
+      <Animated.View style={{transform:[{translateY: t}], opacity: o}}>
+        {children}
+      </Animated.View>
+    );
+  }
+  
 
 
 
@@ -275,6 +331,16 @@ const styles = StyleSheet.create({
     }, 
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+
+    viewImage: {
+      width: 350, 
+      height: 350, 
+      alignContent: 'center'
+    }, 
+
+    container: {
+      flex: 0
+    }
 
     
   }
